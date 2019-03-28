@@ -1,0 +1,27 @@
+<% include header %>
+	<table class="ui striped table">
+	 	<thead>
+	    	<tr>
+				<th>餐厅名称</th>
+				<th>订单编号</th>
+				<th>会员邮箱</th>
+				<th>会员地址</th>
+		      	<th>下单时间</th>
+				<th>订单状态</th>
+	    	</tr>
+	  	</thead>
+		<tbody>
+		 <% orderDishes.forEach(function(orderDish){ %>
+			<tr>
+				<td><%=  orderDish.restaurantName %></td>
+	    		<td><%=  orderDish.id %></td>
+				<td><%=   orderDish.username%></td>
+	    		<td><%=   orderDish.address %></td>
+				<td><%=   orderDish.orderDate %></td>
+				<td><%=   orderDish.status %></td>
+			</tr>
+		 <% }) %>
+		</tbody>
+	</table>
+<%- include("pagination",{type:'orderDish'}) %>
+<% include footer %>

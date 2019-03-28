@@ -1,0 +1,56 @@
+<% include header %>
+	<table class="ui striped table">
+	 	<thead>
+	    	<tr>
+		      	<th>ID</th>
+		      	<th>发送者</th>
+				<th>接受者</th>
+		      	<th>发送时间</th>
+		      	<th>内容</th>
+	    	</tr>
+	  	</thead>
+		<tbody>
+		 <% messages.forEach(function(message){ %>
+			<tr>
+	    		<td><%=  message.id %></td>
+	    		<td><%=  message.senderName %></td>
+	    		<td><%=   message.receiverName %></td>
+	    		<td><%=   message.sendTime%></td>
+	    		<td><%=   message.detail %></td>
+				<td><a href="/"><button v-id="<%= message.id %>" class="ui primary button agree" title="批准">批准</button></td>
+				<td><a href="/message"><button v-id="<%= message.id %>" class="ui primary button delete" title="删除">删除</button></td>
+			</tr>
+		 <% }) %>
+		</tbody>
+	</table>
+	<%- include("pagination",{type:' message'}) %>
+<script>
+	$('.ui.dropdown').dropdown()
+	$(function(){
+		$('.agree').click((e)=>{
+			console.log(e.target.getAttribute('v-id'))
+			$.ajax({
+				url:'/agreeMessage/'+e.target.getAttribute('v-id'),
+				type:'POST',
+				success:function(res){
+					if (res==='success') {
+						window.location.reload()
+					}
+				}
+			})
+		})
+		$('.delete').click((e)=>{
+			console.log(e.target.getAttribute('v-id'))
+			$.ajax({
+				url:'/deleteMessage/'+e.target.getAttribute('v-id'),
+				type:'POST',
+				success:function(res){
+					if (res==='success') {
+						window.location.reload()
+					}
+				}
+			})
+		})
+	})
+</script>
+<% include footer %>

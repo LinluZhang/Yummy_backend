@@ -1,0 +1,227 @@
+<% include header %>
+
+<div class="ui form segment" onsubmit="return"  style="width: 60%;margin:0 auto 40px">
+  <div class="field">
+    <label>菜名</label>
+    <input type="text" name="dishName" placeholder="菜名">
+  </div>
+  <div class="fields equal width">
+    <div class="field">
+      <label>菜肴类型</label>
+      <select class="ui fluid search dropdown" name="dishType">
+        <option value="">菜肴类型</option>
+        <option value="特卖">特卖</option>
+        <option value="营养汤羹">营养汤羹</option>
+        <option value="进店必选">进店必选</option>
+        <option value="冬季新品">冬季新品</option>
+        <option value="秦淮佳酿">秦淮佳酿</option>
+        <option value="感恩回馈">感恩回馈</option>
+        <option value="秦淮小厨">秦淮小厨</option>
+        <option value="烧卤卤味">烧卤卤味</option>
+        <option value="名点主食">名点主食</option>
+        <option value="经典热菜">经典热菜</option>
+        <option value="精美冷碟">精美冷碟</option>
+        <option value="套餐">套餐</option>
+        <option value="风味饮品">风味饮品</option>
+        <option value="其他">其他</option>
+      </select>
+    </div>
+    <div class="six field">
+      <label>评分</label>
+      <select class="ui fluid search dropdown" name="dishStar">
+        <option value="">评分</option>
+        <option value="10.0">10.0</option>
+        <option value="9.0">9.0</option>
+        <option value="8.0">8.0</option>
+        <option value="7.0">7.0</option>
+        <option value="6.0">6.0</option>
+        <option value="5.0">5.0</option>
+        <option value="4.0">4.0</option>
+        <option value="3.0">3.0</option>
+        <option value="2.0">2.0</option>
+        <option value="1.0">1.0</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>到期时间</label>
+      <input type="date" name="endTime" placeholder="到期时间">
+    </div>
+  </div>
+
+  <div class="fields">
+    <div class="field">
+      <label>图片</label>
+      <input type="file" name="newFile" multiple>
+    </div>
+  </div>
+  <div class="fields equal width">
+    <div class="field">
+      <label>折扣</label>
+      <select class="ui fluid search dropdown" name="discount">
+        <option value="">折扣</option>
+        <option value="10.0">10.0</option>
+        <option value="9.0">9.0</option>
+        <option value="8.0">8.0</option>
+        <option value="7.0">7.0</option>
+        <option value="6.0">6.0</option>
+        <option value="5.0">5.0</option>
+        <option value="4.0">4.0</option>
+        <option value="3.0">3.0</option>
+        <option value="2.0">2.0</option>
+        <option value="1.0">1.0</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>发布数量（份）</label>
+      <input type="text" name="quantity" placeholder="发布数量（份）">
+    </div>
+    <div class="field">
+      <label>价格（元）</label>
+      <input type="text" name="price" placeholder="价格（元）">
+    </div>
+  </div>
+  <div class=" fields">
+  </div>
+  <div class="field">
+    <label>菜肴描述</label>
+    <textarea placeholder="菜肴描述" name="dishDetail"></textarea>
+  </div>
+  <div class="ui button submit">Submit</div>
+  <div class="ui reset button">重置</div>
+  <div class="ui clear button">清除提示</div>
+</div>
+
+<script>
+  $(function(){
+    $('select.dropdown').dropdown()
+    var formdata = new FormData()
+    formdata.append('file', $('input[name=file]').val())
+
+    $('input[name=newFile]').change(function (e) {
+        console.log(e.target)
+        formdata.append('newFile', e.target.files[0])
+    })
+    var isAllow = true
+    if(!isAllow) return
+    $('.ui.form')
+    .form({
+      inline : true,
+      on  : 'blur',
+      onSuccess: function() {
+        isAllow = false;
+        ['dishName', 'endTime', 'quantity', 'price'].forEach(function (val) {
+          formdata.append(val, $('input[name=' + val + ']').val())
+        });
+        ['discount', 'dishStar', 'dishType'].forEach(function (val) {
+          formdata.append(val, $('select[name=' + val + ']').val())
+        });
+        formdata.append('dishDetail',$('textarea').val())
+        $.ajax({
+            url: location.pathname,
+            type: 'POST',
+            cache: false,
+            data: formdata,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (data) {
+                isAllow = true
+                if (data.code == 200) {
+                    alert('修改成功')
+                    location.href = '/'
+                    formdata = new FormData()
+                }else{
+                  alert('修改失败')
+                  formdata = new FormData()
+
+                }
+            }
+        });
+      },
+      fields: {
+        name: {
+          identifier: 'dishName',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请输入名称！'
+            }
+          ]
+        },
+        discount: {
+          identifier: 'discount',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请输入折扣！'
+            }
+          ]
+        },
+        endTime: {
+          identifier: 'endTime',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请输入到期时间！'
+            }
+          ]
+        },
+        quantity: {
+          identifier: 'quantity',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请输入数量！'
+            }
+          ]
+        },
+        dishType: {
+          identifier: 'dishType',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请输入类型！'
+            }
+          ]
+        },
+        price: {
+          identifier: 'price',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请输入价格！'
+            }
+          ]
+        },
+        detail: {
+          identifier: 'dishDetail',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请输入描述！'
+            }
+          ]
+        },
+        newFile: {
+          identifier: 'newFile',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请上传图片！'
+            }
+          ]
+        },
+        dishStar: {
+          identifier: 'dishStar',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : '请选择评分！'
+            }
+          ]
+        },
+      }
+    });
+  })
+</script>
+<% include footer %>

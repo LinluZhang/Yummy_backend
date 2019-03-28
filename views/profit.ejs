@@ -1,0 +1,22 @@
+<% include header %>
+	<table class="ui striped table">
+	 	<thead>
+	    	<tr>
+				<th>餐厅编号</th>
+		      	<th>餐厅名称</th>
+				<th>餐厅地址</th>
+				<th>收入（元）</th>
+	    	</tr>
+	  	</thead>
+		<tbody>
+		 <% profits.forEach(function(profit){ %>
+			<tr>
+	    		<td><%=  profit.id %></td>
+	    		<td><%=  profit.restaurantName %></td>
+	    		<td><%=   profit.address %></td>
+	    		<td><%=   profit.profit%></td>
+			</tr>
+		 <% }) %>
+		</tbody>
+	</table>
+<% include footer %>

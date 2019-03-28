@@ -1,0 +1,33 @@
+<% include header %>
+	<table class="ui striped table">
+	 	<thead>
+	    	<tr>
+		      	<th>ID</th>
+		      	<th>喜欢/不喜欢</th>
+		      	<th>用户名</th>
+		      	<th>菜名</th>
+		      	<th>菜肴编号</th>
+				<th>用户编号</th>
+	    	</tr>
+	  	</thead>
+		<tbody>
+		 <% likes.forEach(function(like){ %>
+			<tr>
+	    		<td><%=  like.id %></td>
+	    		<% if(like.iLike == 1) { %>
+	    			<td>喜欢</td>
+	    		<% } else{ %>
+	    			<td>不喜欢</td>
+	    		<% } %>
+	    		<td><%=  like.username %></td>
+	    		<td><%=  like.dishName %></td>
+	    		<td><%=  like.star %></td>
+	    		<td><%=  like.dishId %></td>
+	    	</tr>
+		 <% }) %>
+		</tbody>
+	</table>
+
+	<%- include("pagination",{type: 'like'}) %>
+
+<% include footer %>

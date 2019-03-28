@@ -1,0 +1,19 @@
+<% include header %>
+	<table class="ui striped table">
+	 	<thead>
+	    	<tr>
+		      	<th>餐厅编号</th>
+		      	<th>餐厅名</th>
+	    	</tr>
+	  	</thead>
+		<tbody>
+		 <% restaurant.forEach(function(restaurant){ %>
+			<tr>
+	    		<td><%=  restaurant.id %></td>
+	    		<td><%=  restaurant.restaurantName %></td>
+	    	</tr>
+		 <% }) %>
+		</tbody>
+	</table>
+	<%- include("pagination",{type:'restaurant'}) %>
+<% include footer %>

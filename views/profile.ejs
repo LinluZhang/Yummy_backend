@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>yummy餐厅信息更改</title>
+	<link rel="icon" href="http://www.wclimb.site/images/avatar.png">
+</head>
+<link href="http://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" rel="stylesheet">
+<script src="http://cdn.bootcss.com/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
+<body>
+<div class="ui inverted segment"  style="margin-top: 0;">
+	<div class="ui inverted secondary menu"></div>
+</div>
+<form class="ui form segment" method="post" action="/profile" style="width: 30%;margin: 0 auto;">
+	<div class="field">
+		<label>原名</label>
+		<input type="text" name="oldName" placeholder="餐厅原名称">
+	</div>
+	<div class="field">
+		<label>新名称</label>
+		<input type="text" name="newName" placeholder="餐厅新名称">
+	</div>
+	<div class="field">
+		<label>餐厅地址</label>
+		<input type="text" name="address" placeholder="餐厅地址">
+	</div>
+	<div class="field">
+		<label>餐厅类型</label>
+		<select class="ui fluid search dropdown" name="restaurantType">
+			<option value="">餐厅类型</option>
+			<option value="western">西餐厅</option>
+			<option value="Japanese">日本料理店</option>
+			<option value="Chinese">中餐厅</option>
+			<option value="fastfood">快餐店</option>
+			<option value="Korean">韩国料理店</option>
+			<option value="barbecue">烧烤店</option>
+			<option value="grilled">烤肉店</option>
+			<option value="hotpot">火锅店</option>
+			<option value="fried">炒饭店</option>
+			<option value="buffet">自助餐</option>
+			<option value="cafe">咖啡厅</option>
+			<option value="other">其他</option>
+		</select>
+	</div>
+	<button class="ui fluid primary button" type="submit">修改</button>
+</form>
+</body>
+<script>
+	$(function(){
+		$('.ui.dropdown').dropdown()
+		$('.ui.form')
+				.form({
+					inline : true,
+					on   : 'blur',
+					fields: {
+						oldName: {
+							identifier: 'oldName',
+							rules: [
+								{
+									type   : 'empty',
+									prompt : '请输入餐厅原名！',
+								}
+							]
+						},
+						newName: {
+							identifier: 'newtName',
+							rules: [
+								{
+									type   : 'empty',
+									prompt : '请输入餐厅新名称！',
+								}
+							]
+						},
+						address: {
+							identifier: 'address',
+							rules: [
+								{
+									type   : 'empty',
+									prompt : '请输入地址！'
+								}
+							]
+
+						},
+						restaurantType: {
+							identifier: 'arestaurantType',
+							rules: [
+								{
+									type   : 'empty',
+									prompt : '请输入餐厅类型！'
+								}
+							]
+
+						}
+					}
+				});
+	})
+</script>
+<% include footer %>
